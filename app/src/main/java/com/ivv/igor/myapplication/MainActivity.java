@@ -1,77 +1,38 @@
 package com.ivv.igor.myapplication;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.ivv.igor.myapplication.data.PokDb;
 
 public class MainActivity extends AppCompatActivity {
-    String TAG="   ------------     ";
 
-    public int ind=0;
-    public int drw=R.drawable.icons;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageView iv=(ImageView) findViewById(R.id.iV);
+
+        iv.setImageBitmap(new PokBitmap(45,PokBitmap.QUALITY_ICON,this).getBitmap());
+        TextView tw=(TextView) findViewById(R.id.textView);
+
+        tw.setText("Pidgey");
     }
 
+    @Override
+    protected void onStart() {
+        PokDb mDbHelper = new PokDb(this);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        Cursor c= db.query("CpM",new String[]{"_ID","CpM"},"_ID = ?",new String[]{"45"},null,null,null);
+        c.moveToFirst();
+        double cpm=c.getDouble(c.getColumnIndex("CpM"));
+        TextView tw=(TextView) findViewById(R.id.textView);
 
-    public void doit(View view) {
-        ImageView iv = (ImageView) findViewById(R.id.iV);
-        iv.setImageBitmap(pokImage(++ind,drw));
-    }
-    public void doit1(View view) {
-        ImageView iv = (ImageView) findViewById(R.id.iV);
-        iv.setImageBitmap(pokImage(--ind,drw));
-    }
-    public void doit2(View view) {
-        ImageView iv = (ImageView) findViewById(R.id.iV);
-        switch (drw){
-            case(R.drawable.icons):drw=R.drawable.icons_ls;break;
-            case(R.drawable.icons_ls):drw=R.drawable.pkm_full;break;
-            case(R.drawable.pkm_full):drw=R.drawable.icons_shuffle;break;
-            case(R.drawable.icons_shuffle):drw=R.drawable.icons;break;
-        }
-        iv.setImageBitmap(pokImage(ind,drw));
-    }
-
-    public Bitmap pokImage(int index,int drwbl){
-        if(index<=0 || index>151)return null;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;
-        Bitmap b= BitmapFactory.decodeResource(getResources(),drwbl,options);
-        int w=b.getWidth();
-        int h=b.getHeight();
-        int pokInRow=0;
-        int pokInCol=0;
-        switch(drwbl){
-            case(R.drawable.icons):
-                pokInRow=12;
-                pokInCol=13;
-                break;
-            case(R.drawable.icons_ls):
-                pokInRow=7;
-                pokInCol=22;
-                break;
-            case(R.drawable.pkm_full):
-                pokInRow=10;
-                pokInCol=20;
-                break;
-            case (R.drawable.icons_shuffle):
-                pokInRow=7;
-                pokInCol=22;
-                break;
-        }
-        w=w/pokInRow;
-        h=h/pokInCol;
-        int x=(index-1)%pokInRow;
-        x*=w;
-        int y=(index-1)/pokInRow;
-        y*=h;
-        return Bitmap.createBitmap(b,x,y,w,h);
+        tw.setText(cpm+"");
+        super.onStart();
     }
 }

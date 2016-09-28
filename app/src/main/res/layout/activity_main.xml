@@ -10,40 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ivv.igor.myapplication.MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/evolver"
+        android:textSize="32sp"
+        android:id="@+id/textView" />
+
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@color/colorAccent"
         android:id="@+id/iV"
-        android:layout_above="@+id/iV3" />
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@color/colorAccent"
-        android:id="@+id/iV3"
-        android:onClick="doit"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@color/colorAccent"
-        android:id="@+id/iV2"
-        android:onClick="doit1"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/iV3"
-        android:layout_toEndOf="@+id/iV3" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@color/colorAccent"
-        android:id="@+id/iV4"
-        android:onClick="doit2"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/iV2"
-        android:layout_toEndOf="@+id/iV2" />
 </RelativeLayout>
